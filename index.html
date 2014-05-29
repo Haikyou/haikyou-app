@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Haikyou</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <!-- Makes your prototype chrome-less once bookmarked to your phone's home screen -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Include the compiled Ratchet CSS -->
+    <link href="ratchet-v2.0.2/css/ratchet.css" rel="stylesheet">
+    <link href="ratchet-v2.0.2/css/ratchet-theme-ios.css" rel="stylesheet">
+
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- Include the compiled Ratchet JS -->
+    <script src="ratchet-v2.0.2/js/ratchet.js"></script>
+  </head>
+  <body>
+
+    <!-- Make sure all your bars are the first things in your <body> -->
+    <header class="bar bar-nav">
+      <a class="icon icon-left-nav pull-left" href=""></a>
+      <a class="icon icon-compose pull-right"></a>
+      <h1 class="title">Haiku</h1>
+    </header>
+
+    <!-- Wrap all non-bar HTML in the .content div (this is actually what scrolls) -->
+    <div class="content">
+      <div class="card">
+          <ul class="table-view">
+            <li class="table-view-cell">
+              <a class="navigate-right" href="me.html" data-transition="slide-in">
+                Load new page with push
+              </a>
+            </li>
+          </ul>
+      </div>
+    </div>
+
+
+
+    <nav class="bar bar-tab">
+      <a class="tab-item active" href="#home">
+        <span class="icon icon-home"></span>
+        <span class="tab-label">Home</span>
+      </a>
+      <a class="tab-item" href="#me">
+        <span class="icon icon-person"></span>
+        <span class="tab-label">Me</span>
+      </a>
+      <a class="tab-item" href="#settings">
+        <span class="icon icon-gear"></span>
+        <span class="tab-label">Settings</span>
+      </a>
+    </nav>
+
+  </body>
+</html>
