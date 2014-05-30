@@ -1,4 +1,0 @@
-haikyou-app
-===========
-
-Haikyou webapp
