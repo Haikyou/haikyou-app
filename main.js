@@ -28,11 +28,10 @@ var messageBox = $$({}, '<div><form class="form" role="form"><div class="formgro
 				},
 
 				'persist:error':function(){
-					console.log('Could not save :(');
 				},
 
 				'persist:save:success':function(){
-					$$.document.prepend(this, '#conversation-container div');
+					$$.document.prepend(this, '#conversation-container');
 				}
 			}
 		});
