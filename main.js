@@ -2,14 +2,14 @@
 var message = $$({
 	model: {},
 	view:{
-		format: '<li class="message-card fade in"><div data-bind="from" /><div data-bind="to" /><div data-bind="message" /><div data-bind="date" /></li>',
+		format: '<div class="message-card fade in media"><div class="media-body"><h4 class="media-heading" data-bind="message" /><span data-bind="from" /> &middot; <span data-bind="to" /> &middot; <span data-bind="date" /></div></div>',
 	}, 
 	controller: {}
-}).persist($$.adapter.restful, {collection: 'conversation', baseUrl: 'http://localhost:3000/'});
+}).persist($$.adapter.restful, {collection: 'conversation', baseUrl: 'http://haikyou.herokuapp.com/'});
 
 
 // Conversation Container
-var conversation = $$({}, '<div><ul/></div', {
+var conversation = $$({}, '<div/>', {
 	'persist:start': function(){
 	},
 
@@ -32,7 +32,7 @@ var messageBox = $$({}, '<div><form class="form" role="form"><div class="formgro
 				},
 
 				'persist:save:success':function(){
-					$$.document.prepend(this, '#conversation-container div ul');
+					$$.document.prepend(this, '#conversation-container div');
 				}
 			}
 		});
@@ -46,4 +46,4 @@ var messageBox = $$({}, '<div><form class="form" role="form"><div class="formgro
 $$.document.append(messageBox, '#new-message-container');
 $$.document.append(conversation, '#conversation-container');
 
-conversation.gather(message, 'append', 'ul');
+conversation.gather(message, 'append');

@@ -1,12 +1,10 @@
 
 .message-card{
-	background-color: #FFF;
-	color: #2d2d2d;
-	margin-top: 40px;
+	background-color: #3276b1;
+	color: #FFF;
 	padding: 20px;
-	list-style: none;
-	font-size: 21px;
-	box-shadow: 6px 6px 0 0 #AAA;
+	margin-top: 5em !important;
+	box-shadow: 6px 6px 0 0 #125691;
 }
 
 #new-message-container textarea{
