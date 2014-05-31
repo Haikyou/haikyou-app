@@ -1,0 +1,21 @@
+
+.message-card{
+	background-color: #FFF;
+	color: #2d2d2d;
+	margin-top: 40px;
+	padding: 20px;
+	list-style: none;
+	font-size: 21px;
+	box-shadow: 6px 6px 0 0 #AAA;
+}
+
+#new-message-container textarea{
+	margin-top: 4em;
+	margin-bottom: 1em;
+	border: none !important;
+	box-shadow: 6px 6px 0 0 #AAA;
+	color: #2d2d2d;
+	width: 300px;
+	height: 100px;
+	outline: none;
+}

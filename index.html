@@ -1,24 +1,131 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 	<head>
+		<title>Haikyou</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta charset="utf-8">
-		<title>Agility.js demo page</title>
-		<script src="jquery.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="agility.min.js" type="text/javascript" charset="utf-8"></script>
+		
+		<link rel="shortcut icon" href="favicon.png">
+
 		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300">
 		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/bootstrap/justified-nav.css">
 		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/app.css">
 	</head>
 
-	<body>
-		<div class="container">
-			<div class="row">
-		  		<div class="col-sm-12" id="conversation-container"></div>
+
+<body data-spy="scroll" data-target="#bs-example-navbar-collapse-1">
+
+
+<nav id="navigation" class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <h1><a class="navbar-brand" id="heading" href="#top">Haikyou</a></h1>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+		<li style="display: none;"><a href="#haikyou">Haikyou</a></li>
+		<li><a href="#">Stream</a></li>
+		<li><a href="#">New</a></li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+      	<li>
+      		<a href="http://haikyou.jord.io">Sign out</a>
+      	</li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+
+
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+	<div class="container">
+
+	  <!-- Jumbotron -->
+	  <div id="haikyou" class="jumbotron">
+		<p class="lead">Communication is poetry</p>
+
+		<div class="row">
+			<div class="col-sm-4">
+			</div>
+
+			<div class="col-sm-4">
+				<div class="row">
+					<div class="col-xs-2"></div>
+					<div class="col-xs-2" style="background-color: #ea0079; height: 50px; margin-top: 20px"></div>
+
+					<div class="col-xs-1"></div>
+
+					<div class="col-xs-2" style="background-color: #ea0079; height: 70px;"></div>
+
+					<div class="col-xs-1"></div>
+
+					<div class="col-xs-2" style="background-color: #ea0079; height: 50px; margin-top: 20px"></div>
+					<div class="col-xs-2"></div>
+				</div>
+
+			</div>
+
+			<div class="col-sm-4">
 			</div>
 		</div>
-	  	
-	  	<script src="main.js" type="text/javascript" charset="utf-8"></script>
-	</body>
+
+		<div class="row">
+			<div class="col-sm-12" id="new-message-container"></div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12" id="conversation-container"></div>
+		</div>
+
+	</div>
+
+
+
+	  <!-- Site footer -->
+	  <footer class="footer">
+		<p class="pull-right"><a href="https://twitter.com/openstock_io" target="_blank">Twitter</a> &middot; <a href="https://github.com/haikyou/haikyou-api" target="_blank" class="has-tooltip" data-toggle="tooltip" data-placement="top" title="Code">Github</a></p>
+
+		<p>&copy; Haikyou 2014.</p>
+	  </footer>
+
+	</div> <!-- /container -->
+
+  </body>
+
+	<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<script src="agility.min.js" type="text/javascript" charset="utf-8"></script>
+  	<script src="main.js" type="text/javascript" charset="utf-8"></script>
+
+	<script>
+		$(document).ready(function(){
+
+			// Initialize tooltips
+			$('.has-tooltip').each(function(e){
+				$(this).tooltip();
+			});
+
+			$('#bs-example-navbar-collapse-1').on('click', function(e){
+				setTimeout(function(e){
+					$('#bs-example-navbar-collapse-1').collapse('hide');
+				}, 400);
+			});
+		});
+
+	</script>
+
 
 </html>
+
