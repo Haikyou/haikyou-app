@@ -15,41 +15,39 @@
 	</head>
 
 
-<body data-spy="scroll" data-target="#bs-example-navbar-collapse-1">
+<body>
+	<nav id="navigation" class="navbar navbar-default navbar-fixed-top" role="navigation">
+	  <div class="container-fluid">
+
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <h1><a class="navbar-brand" id="heading" href="#top">Haikyou</a></h1>
+	    </div>
+
+	    <div class="collapse navbar-collapse">
+	      <ul class="nav navbar-nav">
+			<li style="display: none;"><a href="#haikyou">Haikyou</a></li>
+			<li><a href="#">Stream</a></li>
+	      </ul>
+
+	      <ul class="nav navbar-nav navbar-right">
+	      	<li>
+	      		<a href="http://haikyou.jord.io">Sign out</a>
+	      	</li>
+	      </ul>
+	    </div><!-- /.navbar-collapse -->
 
 
-<nav id="navigation" class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container-fluid">
-
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <h1><a class="navbar-brand" id="heading" href="#top">Haikyou</a></h1>
-    </div>
-
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-		<li style="display: none;"><a href="#haikyou">Haikyou</a></li>
-		<li><a href="#">Stream</a></li>
-      </ul>
-
-      <ul class="nav navbar-nav navbar-right">
-      	<li>
-      		<a href="http://haikyou.jord.io">Sign out</a>
-      	</li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
+	  </div><!-- /.container-fluid -->
+	</nav>
 
 
-  </div><!-- /.container-fluid -->
-</nav>
-
-
-	<div class="container">
+	<div class="container-fluid">
 
 	  <!-- Jumbotron -->
 	  <div id="haikyou" class="jumbotron">
@@ -96,6 +94,28 @@
 
 	  <!-- Site footer -->
 	  <footer class="footer">
+
+  		<div class="row">
+			<div class="col-sm-3"></div>
+			<div class="col-sm-6">
+				<ul>
+					<li>
+						Kan bestå av 5-7-5 stavelser på tre rader, men kan även vara fri från stavelseräkning. Helst uppdelad på helst tre rader.
+					</li>
+
+					<li>
+						Bör innehålla ett årstidangivande uttryck.						
+					</li>
+
+					<li>
+						Bör också vara indelad i två hälfter för att förstärka överraskningseffekten.
+					</li>
+				</ul>						
+			</div>
+			<div class="col-sm-3"></div>
+		</div>
+
+
 		<p class="pull-right"><a href="https://twitter.com/openstock_io" target="_blank">Twitter</a> &middot; <a href="https://github.com/haikyou/haikyou-api" target="_blank" class="has-tooltip" data-toggle="tooltip" data-placement="top" title="Code">Github</a></p>
 
 		<p>&copy; Haikyou 2014.</p>
