@@ -1,3 +1,6 @@
+*{
+	border-radius: 0 !important;
+}
 
 .message-card{
 	background-color: #3276b1;
@@ -13,7 +16,5 @@
 	border: none !important;
 	box-shadow: 6px 6px 0 0 #AAA;
 	color: #2d2d2d;
-	width: 300px;
-	height: 100px;
 	outline: none;
 }

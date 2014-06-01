@@ -19,7 +19,7 @@ var conversation = $$({}, '<div/>', {
 
 
 // Where new messages are typed
-var messageBox = $$({}, '<div><form class="form" role="form"><div class="formgroup"><textarea id="message-text" /></div><div class="formgroup"><button type="button" id="new-message-btn" class="btn btn-primary">Send</button></div></form</div', {
+var messageBox = $$({}, '<div><form class="form" role="form"><div class="formgroup"><textarea class="form-control" id="message-text" /></div><div class="formgroup"><button type="button" id="new-message-btn" class="btn btn-primary from-control">Send</button></div></form</div', {
 	'click button': function(){
 
 		var item = $$(message, {
