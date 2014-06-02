@@ -2,11 +2,12 @@
 var message = $$({
 	model: {},
 	view:{
-		format: '<div class="message-card fade in media"><div class="media-body"><h4 class="media-heading" data-bind="message" /><span data-bind="from" /> &middot; <span data-bind="to" /> &middot; <span data-bind="date" /> &middot; <span data-bind="visibility" /></div></div>',
+		format: '<div class="message-card fade in media"><div class="media-body"><h4 class="media-heading" data-bind="message" /><span data-bind="from" /> &middot; <span data-bind="to" /> &middot; <span data-bind="date" /> &middot; <span data-bind="visibility" /> &middot; <span data-bind="starred" class="glyphicon glyphicon-star starred" /></div></div>',
 	}, 
 	controller: {
-		'click a': function(){
-			
+		'click .starred': function(){
+			this.model.set({'id':this.model.get('_id'), 'starred':true});
+			this.save();
 		}
 	}
 }).persist($$.adapter.restful, {collection: 'conversation', baseUrl: 'http://haikyou.herokuapp.com/'});

@@ -32,7 +32,8 @@
 	    <div class="collapse navbar-collapse">
 	      <ul class="nav navbar-nav">
 			<li style="display: none;"><a href="#haikyou">Haikyou</a></li>
-			<li><a href="#">Stream</a></li>
+			<li><a id="me-btn" href="#">Me</a></li>
+			<li><a id="starred-btn" href="#"><span class="glyphicon glyphicon-star"></span></a></li>
 	      </ul>
 
 	      <ul class="nav navbar-nav navbar-right">
@@ -121,6 +122,11 @@
 					$('#bs-example-navbar-collapse-1').collapse('hide');
 				}, 400);
 			});
+		});
+
+
+		$('#me-btn').on('click', function(e){
+			conversation.gather(message, 'append', null, {'hej':'hejsan'});			
 		});
 
 	</script>
