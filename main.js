@@ -1,16 +1,44 @@
 // Message Prototype
 var message = $$({
-	model: {},
+	model: {
+	},
 	view:{
-		format: '<div class="message-card fade in media"><div class="media-body"><h4 class="media-heading" data-bind="message" /><span data-bind="from" /> &middot; <span data-bind="to" /> &middot; <span data-bind="date" /> &middot; <span data-bind="visibility" /> &middot; <span data-bind="starred" class="glyphicon glyphicon-star starred" /></div></div>',
+		format: '<div class="message-card fade in media"><div class="media-body"><h4 class="media-heading" data-bind="message" /><span data-bind="from" /> &middot; <span data-bind="to" /> &middot; <span data-bind="date" /> &middot; <span data-bind="visibility" /> &middot; <i class="starred fa" /> &middot; <i class="delete fa fa-trash-o" /></div></div>',
 	}, 
 	controller: {
 		'click .starred': function(){
-			this.model.set({'id':this.model.get('_id'), 'starred':true});
+			var isStarred = ("true" == this.model.get('starred'));
+
+			this.model.set({'starred': !isStarred});
 			this.save();
+		},
+
+		'click .delete': function(){
+			this.erase();
+		},
+
+		'create': function(){
+			// Sync Agility id with Mongodb _id
+			this.model.set({'id':this.model.get('_id')});
+
+			updateStar(this.model.get('starred'), this.view.$('.starred'));
+		},
+
+		'persist:start': function(){
+			$('#loading-container').show();
+		},
+
+		'persist:stop': function(){
+			$('#loading-container').hide();
+		},
+
+		'persist:save:success':function(){
+			updateStar(this.model.get('starred'), this.view.$('.starred'));
 		}
+
+
 	}
-}).persist($$.adapter.restful, {collection: 'conversation', baseUrl: 'http://haikyou.herokuapp.com/'});
+}).persist($$.adapter.restful, {collection: 'conversation', baseUrl: 'http://localhost:3000/'});
 
 
 // Conversation Container
@@ -40,10 +68,12 @@ var messageBox = $$({}, '<div><form class="form" role="form"><div class="formgro
 		var item = $$(message, {
 			controller: {
 				'persist:start':function(){
+					$('#loading-container').show();
 					$('#new-message-btn').button('loading');
 				},
 
 				'persist:stop':function(){
+					$('#loading-container').hide();
 					$('#new-message-btn').button('reset');
 				},
 

@@ -9,6 +9,7 @@
 
 		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300">
 		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="http://haikyou.jord.io/css/style.css">
 		<link rel="stylesheet" href="http://haikyou.jord.io/css/bootstrap/justified-nav.css">
 
@@ -21,7 +22,7 @@
 	  <div class="container-fluid">
 
 	    <div class="navbar-header">
-	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="navigation">
+	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="navigation-navigation">
 	        <span class="sr-only">Toggle navigation</span>
 	        <span class="icon-bar"></span>
 	        <span class="icon-bar"></span>
@@ -30,16 +31,16 @@
 	      <h1><a class="navbar-brand" id="heading" href="#top">Haikyou</a></h1>
 	    </div>
 
-	    <div class="collapse navbar-collapse">
+	    <div class="collapse navbar-collapse" id="navigation-navigation">
 	      <ul class="nav navbar-nav">
 			<li style="display: none;"><a href="#haikyou">Haikyou</a></li>
-			<li><a id="me-btn" href="#">Me</a></li>
-			<li><a id="starred-btn" href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+			<li><a id="me-btn" href="#me">Me</a></li>
+			<li><a id="starred-btn" href="#starred"><span class="glyphicon glyphicon-star"></span></a></li>
 	      </ul>
 
 	      <ul class="nav navbar-nav navbar-justified">
 			<li style="display: none;" id="loading-container">
-				<a>Loading ...</a>
+				<a><i class="fa fa-circle-o-notch fa-spin"></i></a>
 			</li>
 		</ul>
 
@@ -115,7 +116,6 @@
 	<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 	<script src="agility.min.js" type="text/javascript" charset="utf-8"></script>
-  	<script src="main.js" type="text/javascript" charset="utf-8"></script>
 
 	<script>
 		$(document).ready(function(){
@@ -125,20 +125,33 @@
 				$(this).tooltip();
 			});
 
-			$('#bs-example-navbar-collapse-1').on('click', function(e){
+			$('#navigation-navigation').on('click', function(e){
 				setTimeout(function(e){
-					$('#bs-example-navbar-collapse-1').collapse('hide');
+					$('#navigation-navigation').collapse('hide');
 				}, 400);
 			});
 		});
 
 
-		$('#me-btn').on('click', function(e){
-			conversation.gather(message, 'append', null, {'hej':'hejsan'});			
+		function updateStar(current, el){
+			el.removeClass('fa-star fa-star-o');
+
+			if (current) {
+				el.addClass('fa-star');
+			}
+
+			else{			
+				el.addClass('fa-star-o');
+			}
+		}
+
+		$('#starred-btn').on('click', function(e){
+			conversation.gather(message, 'append', null, {'starred':'true'});			
 		});
 
 	</script>
 
+  	<script src="main.js" type="text/javascript" charset="utf-8"></script>
 
 </html>
 
