@@ -38,7 +38,7 @@ var message = $$({
 
 
 	}
-}).persist($$.adapter.restful, {collection: 'conversation', baseUrl: 'http://localhost:3000/'});
+}).persist($$.adapter.restful, {collection: 'conversation', baseUrl: 'http://haikyou.herokuapp.com/'});
 
 
 // Conversation Container
