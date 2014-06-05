@@ -14,7 +14,23 @@ var message = $$({
 
 
 // Conversation Container
-var conversation = $$({}, '<div/>', {}).persist();
+var conversation = $$({
+	model: {},
+
+	view: {
+		format: '<div/>'
+	},
+
+	controller: {
+		'persist:start': function(){
+			$('#loading-container').show();
+		},
+
+		'persist:stop': function(){
+			$('#loading-container').hide();
+		}
+	}
+}).persist();
 
 
 // Where new messages are typed
