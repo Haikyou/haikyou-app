@@ -22,3 +22,17 @@
 
 footer{
 }
+
+#loading-container a{
+	color: #ea0079 !important;	
+}
+
+.profile-picture{
+	padding: 0 0 0 0 !important;
+}
+
+.dropdown-menu{
+	background-color: #e7e7e7;
+	border: 0 !important;
+	box-shadow: 6px 6px 0 0 #AAA;
+}

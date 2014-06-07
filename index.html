@@ -18,42 +18,63 @@
 
 
 <body>
+
 	<nav id="navigation" class="navbar navbar-default navbar-fixed-top" role="navigation">
-	  <div class="container-fluid">
+		<div class="container-fluid">
 
-	    <div class="navbar-header">
-	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="navigation-navigation">
-	        <span class="sr-only">Toggle navigation</span>
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>
-	      </button>
-	      <h1><a class="navbar-brand" id="heading" href="#top">Haikyou</a></h1>
-	    </div>
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="navigation-navigation">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
 
-	    <div class="collapse navbar-collapse" id="navigation-navigation">
-	      <ul class="nav navbar-nav">
-			<li style="display: none;"><a href="#haikyou">Haikyou</a></li>
-			<li><a id="me-btn" href="#me">Me</a></li>
-			<li><a id="starred-btn" href="#starred"><span class="glyphicon glyphicon-star"></span></a></li>
-	      </ul>
+				<h1><a class="navbar-brand" id="heading" href="http://app.haikyou.jord.io">Haikyou</a></h1>
+			</div>
 
-	      <ul class="nav navbar-nav navbar-justified">
-			<li style="display: none;" id="loading-container">
-				<a><i class="fa fa-circle-o-notch fa-spin"></i></a>
-			</li>
-		</ul>
+			<div class="collapse navbar-collapse" id="navigation-navigation">
+				<ul class="nav navbar-nav">
+					<li style="display: none;"><a href="#haikyou">Haikyou</a></li>
+					<li><a id="me-btn" href="#me">Me</a></li>
+					<li><a id="starred-btn" href="#starred"><i class="fa fa-star"></i></a></li>
+				</ul>
 
+				<ul class="nav navbar-nav navbar-justified">
+					<li style="display: none;" id="loading-container">
+						<a><i class="fa fa-circle-o-notch fa-spin"></i></a>
+					</li>
+				</ul>
 
-	      <ul class="nav navbar-nav navbar-right">
-	      	<li>
-	      		<a href="http://haikyou.jord.io">Sign out</a>
-	      	</li>
-	      </ul>
-	    </div><!-- /.navbar-collapse -->
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+						<a id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
+							<i id="loading-indicator" class="fa fa-cog"></i>
+						</a>
 
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+							<li>
+								<a href="#">
+									<img src="img/person.jpg" class="profile-picture img-responsive" />
+									<br />
+									<i class="fa fa-file-image-o"></i> Edit profile									
+								</a>
+							</li>
 
-	  </div><!-- /.container-fluid -->
+							<li class="divider"></li>
+
+							<li>
+								<a href="#"><i class="fa fa-wrench"></i> Settings</a>
+							</li>
+
+							<li>
+								<a href="http://haikyou.jord.io"><i class="fa fa-sign-out"></i> Sign out</a>
+							</li>
+						</ul>
+					</li>
+				</ul>				
+			</div><!-- /.navbar-collapse -->
+		</div><!-- /.container-fluid -->
 	</nav>
 
 
@@ -125,12 +146,22 @@
 				$(this).tooltip();
 			});
 
+			/*
 			$('#navigation-navigation').on('click', function(e){
 				setTimeout(function(e){
 					$('#navigation-navigation').collapse('hide');
 				}, 400);
 			});
+*/
 		});
+
+		function start(){
+			$('#loading-container').show();
+		}
+
+		function stop(){
+			$('#loading-container').hide();
+		}
 
 
 		function updateStar(current, el){
@@ -152,6 +183,7 @@
 	</script>
 
   	<script src="main.js" type="text/javascript" charset="utf-8"></script>
+  	<script src="people.js" type="text/javascript" charset="utf-8"></script>
 
 </html>
 
