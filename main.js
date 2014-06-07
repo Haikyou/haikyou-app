@@ -7,9 +7,8 @@ var message = $$({
 	}, 
 	controller: {
 		'click .starred': function(){
-			var isStarred = ("true" == this.model.get('starred'));
 
-			this.model.set({'starred': !isStarred});
+			this.model.set({'starred': !this.model.get('starred')});
 			this.save();
 		},
 
@@ -25,11 +24,11 @@ var message = $$({
 		},
 
 		'persist:start': function(){
-			$('#loading-container').show();
+			start();
 		},
 
 		'persist:stop': function(){
-			$('#loading-container').hide();
+			stop();
 		},
 
 		'persist:save:success':function(){
@@ -51,11 +50,11 @@ var conversation = $$({
 
 	controller: {
 		'persist:start': function(){
-			$('#loading-container').show();
+			start();
 		},
 
 		'persist:stop': function(){
-			$('#loading-container').hide();
+			stop();
 		}
 	}
 }).persist();
@@ -68,12 +67,12 @@ var messageBox = $$({}, '<div><form class="form" role="form"><div class="formgro
 		var item = $$(message, {
 			controller: {
 				'persist:start':function(){
-					$('#loading-container').show();
+					start();
 					$('#new-message-btn').button('loading');
 				},
 
 				'persist:stop':function(){
-					$('#loading-container').hide();
+					stop();
 					$('#new-message-btn').button('reset');
 				},
 
@@ -91,6 +90,11 @@ var messageBox = $$({}, '<div><form class="form" role="form"><div class="formgro
 	},
 
 });
+
+
+
+
+
 
 $$.document.append(messageBox, '#new-message-container');
 $$.document.append(conversation, '#conversation-container');
