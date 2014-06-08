@@ -34,7 +34,7 @@ var message = $$({
 
 
 	}
-}).persist($$.adapter.restful, {collection: 'conversation', baseUrl: 'http://localhost:3000/'});
+}).persist($$.adapter.restful, {collection: 'conversation', baseUrl: 'http://haikyou.herokuapp.com/'});
 
 
 // Conversation Container
@@ -104,7 +104,7 @@ var user = $$({
 	controller: {
 
 	}
-}).persist($$.adapter.restful, {collection: 'users', baseUrl: 'http://localhost:3000/'});
+}).persist($$.adapter.restful, {collection: 'users', baseUrl: 'http://haikyou.herokuapp.com/'});
 
 $$.document.prepend(user, '#me-menu');
 user.load();
