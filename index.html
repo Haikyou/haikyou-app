@@ -23,17 +23,10 @@
 		<div class="container-fluid">
 
 			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="navigation-navigation">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-
 				<h1><a class="navbar-brand" id="heading" href="http://app.haikyou.jord.io">Haikyou</a></h1>
 			</div>
 
-			<div class="collapse navbar-collapse" id="navigation-navigation">
+			<div class="" id="navigation-navigation">
 				<ul class="nav navbar-nav">
 					<li style="display: none;"><a href="#haikyou">Haikyou</a></li>
 					<li><a id="me-btn" href="#me">Me</a></li>
@@ -52,14 +45,7 @@
 							<i id="loading-indicator" class="fa fa-cog"></i>
 						</a>
 
-						<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-							<li>
-								<a href="#">
-									<img src="img/person.jpg" class="profile-picture img-responsive" />
-									<br />
-									<i class="fa fa-file-image-o"></i> Edit profile									
-								</a>
-							</li>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" id="me-menu">
 
 							<li class="divider"></li>
 
@@ -146,13 +132,6 @@
 				$(this).tooltip();
 			});
 
-			/*
-			$('#navigation-navigation').on('click', function(e){
-				setTimeout(function(e){
-					$('#navigation-navigation').collapse('hide');
-				}, 400);
-			});
-*/
 		});
 
 		function start(){
@@ -177,13 +156,18 @@
 		}
 
 		$('#starred-btn').on('click', function(e){
-			conversation.gather(message, 'append', null, {'starred':'true'});			
+			$('#conversation-container div').html('');
+			conversation.gather(message, 'append', null, {'starred':true});			
+		});
+
+		$('#me-btn').on('click', function(e){
+			$('#conversation-container div').html('');
+			conversation.gather(message, 'append', null, {'me':true});			
 		});
 
 	</script>
 
   	<script src="main.js" type="text/javascript" charset="utf-8"></script>
-  	<script src="people.js" type="text/javascript" charset="utf-8"></script>
 
 </html>
 

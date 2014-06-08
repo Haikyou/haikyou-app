@@ -17,9 +17,6 @@ var message = $$({
 		},
 
 		'create': function(){
-			// Sync Agility id with Mongodb _id
-			this.model.set({'id':this.model.get('_id')});
-
 			updateStar(this.model.get('starred'), this.view.$('.starred'));
 		},
 
@@ -37,7 +34,7 @@ var message = $$({
 
 
 	}
-}).persist($$.adapter.restful, {collection: 'conversation', baseUrl: 'http://haikyou.herokuapp.com/'});
+}).persist($$.adapter.restful, {collection: 'conversation', baseUrl: 'http://localhost:3000/'});
 
 
 // Conversation Container
@@ -60,27 +57,17 @@ var conversation = $$({
 }).persist();
 
 
+
 // Where new messages are typed
 var messageBox = $$({}, '<div><form class="form" role="form"><div class="formgroup"><textarea class="form-control" id="message-text" rows="3" /></div><div class="formgroup"><button type="button" id="new-message-btn" class="btn btn-primary from-control" data-loading-text="Sending...">Send</button></div></form</div', {
 	'click button': function(){
 
 		var item = $$(message, {
 			controller: {
-				'persist:start':function(){
-					start();
-					$('#new-message-btn').button('loading');
-				},
-
-				'persist:stop':function(){
-					stop();
-					$('#new-message-btn').button('reset');
-				},
-
-				'persist:error':function(){
-				},
-
-				'persist:save:success':function(){
+				'~persist:save:success':function(){
 					$$.document.prepend(this, '#conversation-container');
+					$('#message-text').val('');
+					this.load();
 				}
 			}
 		});
@@ -93,8 +80,34 @@ var messageBox = $$({}, '<div><form class="form" role="form"><div class="formgro
 
 
 
+var user = $$({
+	model: {
+		id: 'rhymn'
+	},
 
+	view: {
+		format: '\
+		<li>\
+			<a href="#">\
+				<img src="img/person.jpg" class="profile-picture img-responsive" />\
+				<i class="fa fa-file-image-o"></i> Edit profile\
+			</a>\
+		</li>\
+		<li class="divider" />\
+		<li>\
+			<a data-bind="username" />\
+		</li>\
+		<li>\
+			<a data-bind="email" /></a>'
+	},
 
+	controller: {
+
+	}
+}).persist($$.adapter.restful, {collection: 'users', baseUrl: 'http://localhost:3000/'});
+
+$$.document.prepend(user, '#me-menu');
+user.load();
 
 $$.document.append(messageBox, '#new-message-container');
 $$.document.append(conversation, '#conversation-container');
