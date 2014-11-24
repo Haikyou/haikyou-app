@@ -5,8 +5,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta charset="utf-8">
 		
-		<link rel="shortcut icon" href="http://haikyou.jord.io/img/favicon.png">
-
 		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300">
 		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
@@ -120,11 +118,195 @@
 
   </body>
 
-	<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+	<script type="template" id="message-view-template">
+		<div class="message-card fade in media">
+			<div class="media-body">
+				<h4 class="media-heading"><%= message %></h4>
+				
+				<span><%= from %></span> &middot; <span><%= to %></span> &middot; <span><%= date %></span> &middot; <span><%= visibility %></span> &middot; <i class="starred fa"></i> &middot; <i class="delete fa fa-trash-o"></i>				
+			</div>
+		</div>
+	</script>  	
+
+
+	<script type="template" id="new-message-view-template">
+		<div>
+			<form class="form" role="form">
+				<div class="formgroup">
+					<textarea class="form-control" id="message-text" rows="3" />
+				</div>
+				
+				<div class="formgroup">
+					<button type="button" id="new-message-btn" class="btn btn-primary from-control" data-loading-text="Sending...">Send</button>
+				</div>
+			</form>
+		</div>
+	</script>
+
+
+	<script type="template" id="user-view-template">
+		<li>
+			<a href="#">
+				<img src="img/person.jpg" class="profile-picture img-responsive" />
+				<i class="fa fa-file-image-o"></i> Edit profile
+			</a>
+		</li>
+		<li class="divider"></li>
+		<li>
+			<a><%= username %></a>
+		</li>
+		<li>
+			<a><%= email %></a>
+		</li>
+	</script>  	
+
+
+
+	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+	<script src="http://backbonejs.org/backbone-min.js"></script>
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-	<script src="agility.min.js" type="text/javascript" charset="utf-8"></script>
 
 	<script>
+
+
+		var User = Backbone.Model.extend({
+			url: 'http://haikyou.herokuapp.com/user',
+
+		});
+
+
+		var UserView = Backbone.View.extend({
+			el: '#me-menu',
+
+			template: _.template($('#user-view-template').html()),
+
+			initialize: function(){
+				this.model.on('reset change', this.render, this);
+			},
+
+			render: function(){
+				this.$el.prepend(this.template(this.model.toJSON()));
+				return this;
+			}			
+		});
+
+		var user = new User();
+		var userView = new UserView({model: user});
+
+
+		var Message = Backbone.Model.extend({
+			url: 'http://haikyou.herokuapp.com/message',
+
+		});
+
+
+		var Conversation = Backbone.Collection.extend({
+			url: 'http://haikyou.herokuapp.com/conversation',
+		});
+
+		var conversation = new Conversation({collection: Message});
+
+
+
+
+
+
+		var NewMessageView = Backbone.View.extend({
+
+			el: '#new-message-container',
+
+			template: _.template($('#new-message-view-template').html()),
+
+			initialize: function(){
+				this.render();
+			},
+
+			render: function(){
+				this.$el.html(this.template());
+				return this;
+			},
+
+			events: {
+				"click button": "newMessage"
+			},
+
+			newMessage: function(e){
+				var newMessage = new Message({
+					'message': $('#message-text').val(),
+					'from': 'Rocksteady',
+					'to': 'Bebop',
+					'date': 'just now',
+					'visibility': false
+				});
+
+				conversation.add(newMessage);
+				newMessage.save();
+			}
+		});
+
+
+		var MessageView = Backbone.View.extend({
+
+			template: _.template($('#message-view-template').html()),
+
+			initialize: function(){
+				this.model.on('destroy', this.remove, this);
+			},
+
+			remove: function(){
+				this.$el.remove();
+			},
+
+			render: function(){
+				this.$el.html(this.template(this.model.toJSON()));
+				return this;
+			},
+
+			events: {
+				"click .delete": "deleteMessage"
+			},
+
+			deleteMessage: function(e){
+				this.model.destroy();
+			}
+		});
+
+
+
+		var ConversationView = Backbone.View.extend({
+			el: '#conversation-container',
+
+			initialize: function(){
+				this.collection.on('add', this.addOne, this);
+				this.collection.on('reset', this.render, this);
+			},
+
+			render: function(){
+				this.collection.forEach(this.addOne, this);
+			},
+
+			addOne: function(message){
+				var messageView = new MessageView({model: message});
+				this.$el.append(messageView.render().el);	
+			}
+
+		});
+
+		var message = new Message();
+
+		var conversationView = new ConversationView({collection: conversation});
+
+		var newMessageView = new NewMessageView();
+
+		conversation.fetch({reset:true});
+		user.fetch({reset:true});
+
+
+
+
+
+
 		$(document).ready(function(){
 
 			// Initialize tooltips
@@ -143,31 +325,8 @@
 		}
 
 
-		function updateStar(current, el){
-			el.removeClass('fa-star fa-star-o');
-
-			if (current) {
-				el.addClass('fa-star');
-			}
-
-			else{			
-				el.addClass('fa-star-o');
-			}
-		}
-
-		$('#starred-btn').on('click', function(e){
-			$('#conversation-container div').html('');
-			conversation.gather(message, 'append', null, {'starred':true});			
-		});
-
-		$('#me-btn').on('click', function(e){
-			$('#conversation-container div').html('');
-			conversation.gather(message, 'append', null, {'me':true});			
-		});
 
 	</script>
-
-  	<script src="main.js" type="text/javascript" charset="utf-8"></script>
 
 </html>
 
