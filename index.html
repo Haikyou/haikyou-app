@@ -29,6 +29,7 @@
 					<li style="display: none;"><a href="#haikyou">Haikyou</a></li>
 					<li><a id="me-btn" href="#me">Me</a></li>
 					<li><a id="starred-btn" href="#starred"><i class="fa fa-star"></i></a></li>
+					<li><a id="new-btn" href="#new" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="fa fa-fighter-jet"></i></a></li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-justified">
@@ -121,8 +122,8 @@
 	<script type="template" id="message-view-template">
 		<div class="message-card fade in media">
 			<div class="media-body">
-				<h4 class="media-heading"><%= message %></h4>
-				
+				<h4 class="media-heading"><%= message %> <span class="label label-default"><%= type %></span></h4>
+
 				<span><%= from %></span> &middot; <span><%= to %></span> &middot; <span><%= date %></span> &middot; <span><%= visibility %></span> &middot; <i class="starred fa"></i> &middot; <i class="delete fa fa-trash-o"></i>				
 			</div>
 		</div>
@@ -130,16 +131,20 @@
 
 
 	<script type="template" id="new-message-view-template">
-		<div>
-			<form class="form" role="form">
-				<div class="formgroup">
-					<textarea class="form-control" id="message-text" rows="3" />
+		<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<form class="form" role="form">
+						<div class="formgroup">
+							<textarea class="form-control" id="message-text" rows="3" />
+						</div>
+						
+						<div class="formgroup">
+							<button type="button" id="new-message-btn" class="btn btn-primary from-control" data-loading-text="Sending...">Send</button>
+						</div>
+					</form>
 				</div>
-				
-				<div class="formgroup">
-					<button type="button" id="new-message-btn" class="btn btn-primary from-control" data-loading-text="Sending...">Send</button>
-				</div>
-			</form>
+			</div>
 		</div>
 	</script>
 
@@ -169,6 +174,9 @@
 
 	<script>
 
+		// Global events
+		var ev = _.clone(Backbone.Events)
+		
 
 		var User = Backbone.Model.extend({
 			url: 'http://haikyou.herokuapp.com/user',
@@ -202,7 +210,13 @@
 
 
 		var Conversation = Backbone.Collection.extend({
+			initialize: function(){
+				this.on('request', function(){ev.trigger('ev:request')});
+				this.on('sync', function(){ev.trigger('ev:sync')});
+			},
+
 			url: 'http://haikyou.herokuapp.com/conversation',
+
 		});
 
 		var conversation = new Conversation({collection: Message});
@@ -220,6 +234,8 @@
 
 			initialize: function(){
 				this.render();
+				this.on('request', function(e){ev.trigger('ev:request', e)});				
+				this.on('sync', function(e){ev.trigger('ev:sync', e)});				
 			},
 
 			render: function(){
@@ -239,6 +255,8 @@
 					'date': 'just now',
 					'visibility': false
 				});
+
+				$('#message-text').val('');
 
 				conversation.add(newMessage);
 				newMessage.save();
@@ -299,6 +317,17 @@
 
 		var newMessageView = new NewMessageView();
 
+
+		ev.on('ev:request', function(e){
+			console.log(e);
+			$('#loading-container').show();
+		});
+
+		ev.on('ev:sync', function(){
+			$('#loading-container').hide();
+		});
+
+
 		conversation.fetch({reset:true});
 		user.fetch({reset:true});
 
@@ -315,15 +344,6 @@
 			});
 
 		});
-
-		function start(){
-			$('#loading-container').show();
-		}
-
-		function stop(){
-			$('#loading-container').hide();
-		}
-
 
 
 	</script>
