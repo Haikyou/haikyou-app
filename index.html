@@ -16,7 +16,15 @@
 
 
 <body>
-	<div id="new-message-container"></div>
+
+	<div id="new-message-modal" class="modal new-message-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content" id="new-message-container">
+			</div>
+		</div>
+	</div>
+
+
 
 
 	<nav id="navigation" class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -47,15 +55,48 @@
 						</a>
 
 						<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-							<li><a target="_blank" href="#">Haiku</a></li>
 							<li><a target="_blank" href="#">Sonett</a></li>
 							<li><a target="_blank" href="#">Shi</a></li>
-							<li><a target="_blank" href="#">Sijo</a></li>
-							<li><a target="_blank" href="https://en.wikipedia.org/wiki/Limerick_(poetry)">Limerick</a></li>
+							<li><a target="_blank" href="#">Villanelle</a></li>
+							<li><a target="_blank" href="#">Tanka</a></li>
+							<li><a target="_blank" href="#">Haiku</a></li>
+							<li><a target="_blank" href="#">Ode</a></li>
+							<li><a target="_blank" href="#">Ghazal</a></li>
 						</ul>
 					</li>
 
-					<li><a id="new-btn" href="#new" data-toggle="modal" data-target=".new-message-modal"><i class="fa fa-pencil"></i> New</a></li>
+
+
+					<li class="dropdown">
+						<a id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
+							<i class="fa fa-pencil"></i> New
+						</a>
+
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+							<li>
+								<a data-toggle="modal" data-target=".new-message-modal" data-message-type="sonett" href="#">Sonett</a>
+							</li>
+							<li>
+								<a data-toggle="modal" data-target=".new-message-modal" data-message-type="shi" href="#">Shi</a>
+							</li>
+							<li>
+								<a data-toggle="modal" data-target=".new-message-modal" data-message-type="villanelle" href="#">Villanelle</a>
+							</li>
+							<li>
+								<a data-toggle="modal" data-target=".new-message-modal" data-message-type="tanka" href="#">Tanka</a>
+							</li>
+							<li>
+								<a data-toggle="modal" data-target=".new-message-modal" data-message-type="haiku" href="#">Haiku</a>
+							</li>
+							<li>
+								<a data-toggle="modal" data-target=".new-message-modal" data-message-type="ode" href="#">Ode</a>
+							</li>
+							<li>
+								<a data-toggle="modal" data-target=".new-message-modal" data-message-type="ghazal" href="#">Ghazal</a>
+							</li>
+						</ul>
+					</li>
+
 				</ul>
 
 				<ul class="nav navbar-nav navbar-justified">
@@ -104,7 +145,7 @@
 
 	  <!-- Site footer -->
 	  <footer class="footer">
-		<p class="pull-right"><a href="https://twitter.com/openstock_io" target="_blank">Twitter</a> &middot; <a href="https://github.com/haikyou/haikyou-api" target="_blank" class="has-tooltip" data-toggle="tooltip" data-placement="top" title="Code">Github</a></p>
+		<p class="pull-right"><a href="https://github.com/haikyou/haikyou-api" target="_blank" class="has-tooltip" data-toggle="tooltip" data-placement="top" title="Code">Github</a></p>
 
 		<p>&copy; Haikyou 2014.</p>
 	  </footer>
@@ -125,36 +166,29 @@
 
 
 	<script type="template" id="new-message-view-template">
-		<div class="modal new-message-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-sm">
-				<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">
+				<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+			</button>
 
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">
-							<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-						</button>
-
-						<h4 class="modal-title">New Haiku</h4>
-					</div>
-
-
-					<div class="modal-body">
-						<form class="form" role="form">
-							<div class="formgroup">
-								<textarea class="form-control" id="message-text" rows="3" />
-							</div>
-							
-						</form>
-					</div>
-
-			    	<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        				<button type="button" id="new-message-btn" class="btn btn-primary">Send</button>
-        			</div>
-
-				</div>
-			</div>
+			<h4 class="modal-title">New <span><%= type %></span></h4>
 		</div>
+
+
+		<div class="modal-body">
+			<form class="form" role="form">
+				<div class="formgroup">
+					<textarea class="form-control" id="message-text" rows="3" />
+				</div>
+				
+			</form>
+		</div>
+
+    	<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			<button type="button" id="new-message-btn" class="btn btn-primary">Send</button>
+		</div>
+
 	</script>
 
 
@@ -215,6 +249,10 @@
 		var Message = Backbone.Model.extend({
 			url: 'http://haikyou.herokuapp.com/message',
 
+			defaults:{
+				'type': 'Haiku'
+			}
+
 		});
 
 
@@ -244,11 +282,23 @@
 			initialize: function(){
 				this.render();
 				this.on('request', function(e){ev.trigger('ev:request', e)});				
-				this.on('sync', function(e){ev.trigger('ev:sync', e)});				
+				this.on('sync', function(e){ev.trigger('ev:sync', e)});
+				this.model.on('change', this.render, this);
+
+				var _this = this;
+
+				// Since modal is not in the view we must listen to body
+				$('#new-message-modal').on('shown.bs.modal', function(event){
+					var button = $(event.relatedTarget);
+					var messageType = button.data('message-type');
+
+					_this.model.set('type', messageType);
+				});
+
 			},
 
 			render: function(){
-				this.$el.html(this.template());
+				this.$el.html(this.template(this.model.toJSON()));
 				return this;
 			},
 
@@ -257,21 +307,23 @@
 			},
 
 			newMessage: function(e){
-				var newMessage = new Message({
+				var newMessage = {
 					'message': $('#message-text').val(),
 					'from': 'Rocksteady',
 					'to': 'Bebop',
 					'date': 'just now',
 					'visibility': false,
-					'type': 'haiku'
-				});
+					'type': this.model.get('type')
+				};
+
+				this.model.set(newMessage);
 
 				$('#message-text').val('');
 
 				conversation.add(newMessage);
-				newMessage.save();
+				this.model.save();
 
-				this.$el.find('div.modal').modal('hide');
+				$('#new-message-modal').modal('hide');
 			}
 		});
 
@@ -327,11 +379,10 @@
 
 		var conversationView = new ConversationView({collection: conversation});
 
-		var newMessageView = new NewMessageView();
+		var newMessageView = new NewMessageView({model: new Message});
 
 
 		ev.on('ev:request', function(e){
-			console.log(e);
 			$('#loading-container').show();
 		});
 
