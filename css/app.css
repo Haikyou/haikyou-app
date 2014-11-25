@@ -10,13 +10,32 @@
 	box-shadow: 6px 6px 0 0 #125691;
 }
 
-#new-message-container textarea{
+.modal{
+	color: #2d2d2d;
+}
+
+.modal-content{
+	border: none !important;	
+}
+
+.modal-title{
+	text-align: center;
+}
+
+.modal-header{
+	border-bottom: none !important;
+}
+.modal-footer{
+	border-top: none !important;
+}
+
+
+#message-text{
 	resize: none;
-	margin-top: 4em;
-	margin-bottom: 1em;
 	border: none !important;
 	box-shadow: 6px 6px 0 0 #AAA;
-	color: #2d2d2d;
+	color: #FFF;
+	background-color: #3276b1;
 	outline: none;
 }
 

@@ -16,20 +16,46 @@
 
 
 <body>
+	<div id="new-message-container"></div>
+
 
 	<nav id="navigation" class="navbar navbar-default navbar-fixed-top" role="navigation">
 		<div class="container-fluid">
 
 			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				
 				<h1><a class="navbar-brand" id="heading" href="http://app.haikyou.jord.io">Haikyou</a></h1>
+			
 			</div>
 
-			<div class="" id="navigation-navigation">
+
+			<div class="collapse navbar-collapse" id="navigation-collapse">
 				<ul class="nav navbar-nav">
 					<li style="display: none;"><a href="#haikyou">Haikyou</a></li>
-					<li><a id="me-btn" href="#me">Me</a></li>
-					<li><a id="starred-btn" href="#starred"><i class="fa fa-star"></i></a></li>
-					<li><a id="new-btn" href="#new" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="fa fa-fighter-jet"></i></a></li>
+					<li><a id="me-btn" href="#me"><i class="fa fa-user"></i> Me</a></li>
+					<li><a id="starred-btn" href="#starred"><i class="fa fa-star"></i> Starred</a></li>
+
+					<li class="dropdown">
+						<a id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
+							<i class="fa fa-book"></i> Learn
+						</a>
+
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+							<li><a target="_blank" href="#">Haiku</a></li>
+							<li><a target="_blank" href="#">Sonett</a></li>
+							<li><a target="_blank" href="#">Shi</a></li>
+							<li><a target="_blank" href="#">Sijo</a></li>
+							<li><a target="_blank" href="https://en.wikipedia.org/wiki/Limerick_(poetry)">Limerick</a></li>
+						</ul>
+					</li>
+
+					<li><a id="new-btn" href="#new" data-toggle="modal" data-target=".new-message-modal"><i class="fa fa-pencil"></i> New</a></li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-justified">
@@ -94,18 +120,11 @@
 
 		<div class="row">
 			<div class="col-sm-2"></div>
-			<div class="col-sm-8" id="new-message-container"></div>
-			<div class="col-sm-2"></div>
-		</div>
-
-		<div class="row">
-			<div class="col-sm-2"></div>
 			<div class="col-sm-8" id="conversation-container"></div>
 			<div class="col-sm-2"></div>
 		</div>
 
 	</div>
-
 
 
 	  <!-- Site footer -->
@@ -124,25 +143,40 @@
 			<div class="media-body">
 				<h4 class="media-heading"><%= message %> <span class="label label-default"><%= type %></span></h4>
 
-				<span><%= from %></span> &middot; <span><%= to %></span> &middot; <span><%= date %></span> &middot; <span><%= visibility %></span> &middot; <i class="starred fa"></i> &middot; <i class="delete fa fa-trash-o"></i>				
+				<span><%= from %></span> <i class="fa fa-long-arrow-right"></i> <span><%= to %></span> &middot; <span><%= visibility %></span> &middot; <i class="starred fa"></i> &middot; <i class="delete fa fa-trash-o"></i>				
 			</div>
 		</div>
 	</script>  	
 
 
 	<script type="template" id="new-message-view-template">
-		<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-lg">
+		<div class="modal new-message-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-sm">
 				<div class="modal-content">
-					<form class="form" role="form">
-						<div class="formgroup">
-							<textarea class="form-control" id="message-text" rows="3" />
-						</div>
-						
-						<div class="formgroup">
-							<button type="button" id="new-message-btn" class="btn btn-primary from-control" data-loading-text="Sending...">Send</button>
-						</div>
-					</form>
+
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+						</button>
+
+						<h4 class="modal-title">New Haiku</h4>
+					</div>
+
+
+					<div class="modal-body">
+						<form class="form" role="form">
+							<div class="formgroup">
+								<textarea class="form-control" id="message-text" rows="3" />
+							</div>
+							
+						</form>
+					</div>
+
+			    	<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        				<button type="button" id="new-message-btn" class="btn btn-primary">Send</button>
+        			</div>
+
 				</div>
 			</div>
 		</div>
@@ -244,7 +278,7 @@
 			},
 
 			events: {
-				"click button": "newMessage"
+				"click #new-message-btn": "newMessage"
 			},
 
 			newMessage: function(e){
@@ -253,13 +287,16 @@
 					'from': 'Rocksteady',
 					'to': 'Bebop',
 					'date': 'just now',
-					'visibility': false
+					'visibility': false,
+					'type': 'haiku'
 				});
 
 				$('#message-text').val('');
 
 				conversation.add(newMessage);
 				newMessage.save();
+
+				this.$el.find('div.modal').modal('hide');
 			}
 		});
 
